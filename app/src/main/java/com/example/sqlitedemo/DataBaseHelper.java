@@ -1,5 +1,6 @@
 package com.example.sqlitedemo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.sql.SQLData;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -33,5 +36,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+
+    public boolean addOne(CustomerModel customerModel) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        // the cv is similar to a hash-map
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_CUSTOMER_NAME, customerModel.getName());
+        cv.put(COLUMN_CUSTOMER_AGE, customerModel.getAge());
+        cv.put(COLUMN_ACTIVE_CUSTOMER, customerModel.isActive());
+
+        long insert = db.insert(CUSTOMER_TABLE, null, cv);
+
+        if (insert == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
