@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
+                boolean success = dataBaseHelper.addOne(customerModel);
+                Toast.makeText(MainActivity.this, "Success=" + success, Toast.LENGTH_SHORT).show();
+
 
             }
         });
